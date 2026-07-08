@@ -1,8 +1,8 @@
-require_relative '/home/rails/Documents/project_inventory_management_system/controller/authanticate_controller.rb'
+# require_relative '/home/rails/Documents/project_inventory_management_system/controller/authanticate_controller.rb'
+require_relative '../controller/authanticate_controller.rb'
+require_relative '..\controller\vendor_controller.rb'
 
-
-
-$login = false
+$login = [false]
 
 
 begin 
@@ -65,12 +65,12 @@ when 2
         password = gets.chomp
 
         auth = Authanticate_controller.new
-        is_login = auth.login("vendor13@gmail.com","vendor@123")
+        is_login = auth.login("vendor123@gmail.com","vendor@123")
 
         if is_login[0]
           puts "Log in successfully"
-          $login = is_login
-
+        print  $login = is_login
+            break
         else 
             puts "inalid email/password"
         end
@@ -79,4 +79,52 @@ end
 
 
 
-end while (input != 0)
+end while (input != 0) 
+
+
+if $login[0]
+
+
+    if $login[4] == "vendor"
+        begin
+        puts "\n---------------vendor dashboard----------------\n"
+        puts "--------------------------------------------------"
+        puts "-----------------------menu-----------------------\n"
+
+        puts "Enter 1 for Add product"
+        puts "Enter 2 for View all products"
+        puts "Enter 3 for remove product"
+        puts "Enter 4 for update products"
+        puts "Enter 0 for log out"
+        vendor_input = gets.chomp.to_i
+        vendor = Vendor.new($login[1], $login[2])
+
+        case vendor_input
+        when 1 
+           added = vendor.add_product("Laptop", "Asus",  49999, "Electronics") 
+           puts "product added successfully" if added
+           puts "product not added" if !added
+       
+        when 2
+            vendor.view_products("../dao/products_list.txt")
+
+        end
+
+     
+        end while(vendor_input != 0)
+    end
+
+     if $login[4] == "customer"
+        
+         puts "\n---------------customer dashboard----------------\n"
+        puts "--------------------------------------------------"
+        puts "-----------------------menu-----------------------\n"
+
+        # puts "Enter 1 for Add product"
+        puts "Enter 1 for View all products"
+        puts "Enter 3 for remove product"
+        puts "Enter 4 for update products"
+        puts "Enter 0 for log out"
+     end
+     
+end
