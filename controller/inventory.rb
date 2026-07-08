@@ -1,6 +1,10 @@
 require_relative '/home/rails/Documents/project_inventory_management_system/controller/authanticate_controller.rb'
 
 
+
+$login = false
+
+
 begin 
 puts "\nChoose option"
 puts "Enter 1 for Register"
@@ -52,5 +56,27 @@ when 1
          
     end
 
+when 2 
+
+        puts "Enter your email "
+        email = gets.chomp
+    
+        puts "Enter your password :"
+        password = gets.chomp
+
+        auth = Authanticate_controller.new
+        is_login = auth.login("vendor13@gmail.com","vendor@123")
+
+        if is_login[0]
+          puts "Log in successfully"
+          $login = is_login
+
+        else 
+            puts "inalid email/password"
+        end
+
 end
+
+
+
 end while (input != 0)
